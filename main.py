@@ -1,16 +1,20 @@
-# This is a sample Python script.
+from alice_blue import *
+from time import sleep
+import datetime
+# import logging
+import yfinance as yf
+import json
+import os
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+cwd = r"F:\Database\cred"
+cred = open(os.path.join(cwd, "cred.txt"), 'r')
+Lines = cred.readlines()
 
+username = Lines[0][:-1]
+password = Lines[1][:-1]
+twoFA = Lines[2][:-1]
+api_secret = Lines[3]
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+access_token = AliceBlue.login_and_get_access_token(username=username, password=password, twoFA=twoFA,
+                                                    api_secret=api_secret)
+alice = AliceBlue(username=username, password=password, access_token=access_token)
